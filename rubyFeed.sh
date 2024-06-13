@@ -14,7 +14,7 @@ getRubyVersion() {
   VERSIONS=$(curl --silent "$RSS_URL" | grep -E '(title)' | tail -n +2 | sed -e 's/^[ \t]*//' | sed -e 's/<title>//' -e 's/<\/title>//')
 
   for version in $VERSIONS; do
-    if [[ $version =~ ^[0-9]+(\_[0-9]+)*$ || $version =~ ^[0-9]+(\.[0-9]+)*$ ]]; then
+    if [[ $version =~ ^v?[0-9]+(\_[0-9]+)*$ || $version =~ ^v?[0-9]+(\.[0-9]+)*$ ]]; then
       generateVersions "$(echo "$version" | trimmer "v" | sed -r 's/_/./g')"
       generateSearchTerms "RUBY_VERSION=" "$majorMinor/Dockerfile" "\\"
       directoryCheck "$majorMinor" "$SEARCH_TERM"
